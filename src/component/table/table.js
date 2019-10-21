@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { submit } from '../../actions';
 import { Table, Input, Button, Popconfirm, Form } from 'antd';
+import Userform from './../form/form.js';
 import './table.css';
 
 const EditableContext = React.createContext();
@@ -165,7 +166,7 @@ class EditableTable extends React.Component {
         return (
             
             <div>
-                
+                <Userform submit= {this.props.submit}/>
                 <Table
                     components={components}
                     rowClassName={() => 'editable-row'}
@@ -180,6 +181,7 @@ class EditableTable extends React.Component {
 
 const mapStateToProps = state => {
     return { userDetails: state.userDetails};
+    
 };
 
 export default connect(mapStateToProps, {submit})(EditableTable);

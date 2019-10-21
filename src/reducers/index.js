@@ -1,19 +1,21 @@
 import { combineReducers } from 'redux';
 
 
+
 const userDetailsReducer = (userDetails = null, action ) =>{
     if (action.type === 'SUBMIT_FORM') {
-        return action.payload;
+        const { firstname, lastname, birthday, age, hobby } = action.payload;
+        return [{
+            key: 1,
+            firstname: firstname,
+            lastname: lastname,
+            birthday: birthday,
+            age: age,
+            hobby: hobby,
+        }];
         
     }
-    return [{
-        key: 0,
-        firstname: 'dAYODELE',
-        lastname: 'dKAYODE',
-        birthday: '10-10-2019',
-        age: 25,
-        hobby: 'dsGOLF',
-    }];
+    return userDetails;
 };
 const submittedDetailsReducer = (userDetails = null , action ) => {
     if (action.type === 'SU_FORM'){

@@ -1,43 +1,44 @@
-import React, { useState } from 'react';
+// import React, { useState } from 'react';
+import React from 'react';
 import './App.css';
 import EditableTable from './table/table';
-import Userform from './form/form';
+// import Userform from './form/form';
 
 
 const App = () => {
 
-  const [state, setState] = useState(
-    {
-      dataSource: [{
-        key: 0,
-        firstname: 'AYODELE',
-        lastname: 'KAYODE',
-        birthday: '10-10-2019',
-        age: 25,
-        hobby: 'GOLF',
-      }],
-      count: 1,
-    }
-  );
+  // const [state, setState] = useState(
+  //   {
+  //     dataSource: [{
+  //       key: 0,
+  //       firstname: 'AYODELE',
+  //       lastname: 'KAYODE',
+  //       birthday: '10-10-2019',
+  //       age: 25,
+  //       hobby: 'GOLF',
+  //     }],
+  //     count: 1,
+  //   }
+  // );
   
 
- const handleAdd = (dataSet) => {
-    const { count, dataSource } = state;
-    const { firstname, lastname, birthday, age, hobby } = dataSet;
-    const newData = {
-      key: count,
-      firstname: firstname,
-      lastname: lastname,
-      birthday: birthday,
-      age: age,
-      hobby: hobby,
-    };
-    setState({
-      dataSource: [...dataSource, newData],
-      count: count + 1,
-    });
-    console.log(newData);
-  };
+//  const handleAdd = (dataSet) => {
+//     const { count, dataSource } = state;
+//     const { firstname, lastname, birthday, age, hobby } = dataSet;
+//     const newData = {
+//       key: count,
+//       firstname: firstname,
+//       lastname: lastname,
+//       birthday: birthday,
+//       age: age,
+//       hobby: hobby,
+//     };
+//     setState({
+//       dataSource: [...dataSource, newData],
+//       count: count + 1,
+//     });
+//     console.log(newData);
+//   };
 
   // const handleDelete = key => {
   //   const dataSource = [...state.dataSource];
@@ -114,7 +115,6 @@ const App = () => {
     
     return (
       <div className="App">
-        <Userform handleAdd= {handleAdd} />
         <EditableTable/>
 
       </div>
