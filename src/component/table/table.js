@@ -1,6 +1,5 @@
 import React from 'react';
 import { Table, Input, Button, Popconfirm, Form } from 'antd';
-import Userform from './../form/form.js';
 import './table.css';
 
 const EditableContext = React.createContext();
@@ -89,8 +88,12 @@ class EditableCell extends React.Component {
 }
 
 class EditableTable extends React.Component {
+    
     constructor(props) {
+        console.log(props);
         super(props);
+        console.log(this.props);
+        console.log(props.newData.dataSource.length);
         this.columns = [
             {
                 title: 'FirstName',
@@ -123,62 +126,19 @@ class EditableTable extends React.Component {
                 title: 'operation',
                 dataIndex: 'operation',
                 render: (text, record) =>
-                    this.state.dataSource.length >= 1 ? (
-                        <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
+                    this.props.newData.dataSource.length >= 1 ? (
+                        <Popconfirm title="Sure to delete?" onConfirm={() => this.props.handleDelete(record.key)}>
                             <Button type="danger" size="small">Delete</Button>
                         </Popconfirm>
                     ) : null, 
             }, 
         ];
+   }
 
-        this.state = {
-            dataSource: [{
-                key: 0,
-                firstname: 'AYODELE',
-                lastname: 'KAYODE',
-                birthday: '10-10-2019',
-                age: 25,
-                hobby: 'GOLF',
-            }],
-            count: 1,
-        };
-    }
-
-    handleDelete = key => {
-        const dataSource = [...this.state.dataSource];
-        this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
-    };
-
-    handleAdd = (dataSet) => {
-        const { count, dataSource } = this.state;
-        const { firstname, lastname, birthday, age, hobby} = dataSet;
-        const newData = {
-            key: count,
-            firstname: firstname,
-            lastname: lastname,
-            birthday: birthday,
-            age: age,
-            hobby: hobby,
-        };
-        this.setState({
-            dataSource: [...dataSource, newData],
-            count: count + 1,
-        });
-    };
-
-    handleSave = row => {
-        const newData = [...this.state.dataSource];
-        const index = newData.findIndex(item => row.key === item.key);
-        const item = newData[index];
-        newData.splice(index, 1, {
-            ...item,
-            ...row,
-        });
-        this.setState({ dataSource: newData });
-    };
+   
 
     render() {
-        const { dataSource } = this.state;
+        const { dataSource } = this.props.newData;
         const components = {
             body: {
                 row: EditableFormRow,
@@ -196,14 +156,14 @@ class EditableTable extends React.Component {
                     editable: col.editable,
                     dataIndex: col.dataIndex,
                     title: col.title,
-                    handleSave: this.handleSave,
+                    handleSave: this.props.handleSave,
                 }),
             };
         });
         return (
             
             <div>
-                <Userform handleAdd={this.handleAdd}/>
+                
                 <Table
                     components={components}
                     rowClassName={() => 'editable-row'}
