@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Table, Input, Button, Popconfirm, Form } from 'antd';
 import './table.css';
 
@@ -93,7 +94,7 @@ class EditableTable extends React.Component {
         console.log(props);
         super(props);
         console.log(this.props);
-        console.log(props.newData.dataSource.length);
+        // console.log(props.newData.dataSource.length);
         this.columns = [
             {
                 title: 'FirstName',
@@ -126,7 +127,7 @@ class EditableTable extends React.Component {
                 title: 'operation',
                 dataIndex: 'operation',
                 render: (text, record) =>
-                    this.props.newData.dataSource.length >= 1 ? (
+                    this.props.userDetails.length >= 1 ? (
                         <Popconfirm title="Sure to delete?" onConfirm={() => this.props.handleDelete(record.key)}>
                             <Button type="danger" size="small">Delete</Button>
                         </Popconfirm>
@@ -138,7 +139,7 @@ class EditableTable extends React.Component {
    
 
     render() {
-        const { dataSource } = this.props.newData;
+        const dataSource  = this.props.userDetails;
         const components = {
             body: {
                 row: EditableFormRow,
@@ -176,4 +177,8 @@ class EditableTable extends React.Component {
     }
 }
 
-export default EditableTable;
+const mapStateToProps = state => {
+    return { userDetails: state.userDetails};
+};
+
+export default connect(mapStateToProps)(EditableTable);
