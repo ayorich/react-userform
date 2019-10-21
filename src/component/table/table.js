@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { submit } from '../../actions';
 import { Table, Input, Button, Popconfirm, Form } from 'antd';
 import './table.css';
 
@@ -181,4 +182,4 @@ const mapStateToProps = state => {
     return { userDetails: state.userDetails};
 };
 
-export default connect(mapStateToProps)(EditableTable);
+export default connect(mapStateToProps, {submit})(EditableTable);

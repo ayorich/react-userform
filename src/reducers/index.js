@@ -1,30 +1,25 @@
-import { combineReducers } from 'redux'
+import { combineReducers } from 'redux';
 
-const userDetailsReducer = () =>{
-    return [
-        {
-            key: 1,
-            firstname: 'AYOELE',
-            lastname: 'KAYODE',
-            birthday: '10-10-2239',
-            age: 25,
-            hobby: 'GOLF',
-        },
-        {
-            key: 2,
-            firstname: 'AYODE',
-            lastname: 'KAYODE',
-            birthday: '10-10-2719',
-            age: 25,
-            hobby: 'GOLF',
-        }
-    ]
+
+const userDetailsReducer = (userDetails = null, action ) =>{
+    if (action.type === 'SUBMIT_FORM') {
+        return action.payload;
+        
+    }
+    return [{
+        key: 0,
+        firstname: 'dAYODELE',
+        lastname: 'dKAYODE',
+        birthday: '10-10-2019',
+        age: 25,
+        hobby: 'dsGOLF',
+    }];
 };
 const submittedDetailsReducer = (userDetails = null , action ) => {
-    if (action.type === 'SUBMIT_FORM'){
+    if (action.type === 'SU_FORM'){
         return action.payload;
     }
-    return userDetails;
+    return null;
 }
 
 export default combineReducers({
