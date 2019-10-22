@@ -29,17 +29,31 @@ let state = {
         return state.dataSource;
 
     }
-if(action.type === 'DELETE_DETAIL'){
-    return null;
-}
 
+    if(action.type === 'DELETE_DETAIL'){
+        const key = action.payload;
+        const dataSource = [...state.dataSource];
+        state = { dataSource: dataSource.filter(item => item.key !== key) }
+        return state.dataSource;
+    }
 
-
-
-
+     if (action.type === 'EDIT_DETAIL'){
+        const row = action.payload;
+        const newData = [...state.dataSource];
+        const index = newData.findIndex(item => row.key === item.key);
+        const item = newData[index];
+        newData.splice(index, 1, {
+        ...item,
+        ...row,
+        });
+         state = {
+             dataSource: newData }
+        return state.dataSource;
+    }
 
     return dataSource;
 };
+
 
 
 

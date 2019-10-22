@@ -8,9 +8,20 @@ export const submit = details => {
     };
 };
 
-export const deleteDetail = d => {
+export const deleteDetail = key => {
+    console.log(key)
     return{
         type: 'DELETE_DETAIL',
-        payload: d
+        payload: key
     }
 }
+
+export const handleSave = row => {
+    console.log(row);
+    return{
+        type: 'EDIT_DETAIL',
+        payload: row
+    }
+}
+
+

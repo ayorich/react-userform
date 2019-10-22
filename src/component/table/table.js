@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { submit } from '../../actions';
+import { submit, deleteDetail, handleSave } from '../../actions';
 import { Table, Input, Button, Popconfirm, Form } from 'antd';
 import Userform from './../form/form.js';
 import './table.css';
@@ -130,7 +130,7 @@ class EditableTable extends React.Component {
                 dataIndex: 'operation',
                 render: (text, record) =>
                     this.props.userDetails.length >= 1 ? (
-                        <Popconfirm title="Sure to delete?" onConfirm={() => this.props.handleDelete(record.key)}>
+                        <Popconfirm title="Sure to delete?" onConfirm={() => this.props.deleteDetail(record.key)}>
                             <Button type="danger" size="small">Delete</Button>
                         </Popconfirm>
                     ) : null, 
@@ -185,4 +185,4 @@ const mapStateToProps = state => {
     
 };
 
-export default connect(mapStateToProps, {submit})(EditableTable);
+export default connect(mapStateToProps, { submit, deleteDetail, handleSave})(EditableTable);
