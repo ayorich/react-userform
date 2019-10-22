@@ -7,3 +7,10 @@ export const submit = details => {
         payload: details
     };
 };
+
+export const deleteDetail = d => {
+    return{
+        type: 'DELETE_DETAIL',
+        payload: d
+    }
+}

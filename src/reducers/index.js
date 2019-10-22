@@ -1,45 +1,48 @@
 import { combineReducers } from 'redux';
+let state = {
+      dataSource: [{
+        key: 0,
+        firstname: 'AYODELE',
+        lastname: 'KAYODE',
+        birthday: '10-10-2019',
+        age: 25,
+        hobby: 'GOLF',
+      }],
+      count: 1,
+    };
 
-
-const userDetailsReducer = (userDetails = null, action) => {
+ const userDetailsReducer = (data= state , action) => {
+    const { dataSource, count } = state;
     if (action.type === 'SUBMIT_FORM') {
         const { firstname, lastname, birthday, age, hobby } = action.payload;
-        return [{
-            key: 1,
+        const newData = {
+            key: count,
             firstname: firstname,
             lastname: lastname,
             birthday: birthday,
             age: age,
             hobby: hobby,
-        }];
+        };
+        state = {dataSource: [...dataSource, newData],
+                            count: count + 1,}
+
+        return state.dataSource;
 
     }
-    return userDetails;
-};
-
-// const userDetailsReducer = (userDetails = null, action ) =>{
-//     if (action.type === 'SUBMIT_FORM') {
-//         const { firstname, lastname, birthday, age, hobby } = action.payload;
-//         return [{
-//             key: 1,
-//             firstname: firstname,
-//             lastname: lastname,
-//             birthday: birthday,
-//             age: age,
-//             hobby: hobby,
-//         }];
-        
-//     }
-//     return userDetails;
-// };
-const submittedDetailsReducer = (userDetails = null , action ) => {
-    if (action.type === 'SU_FORM'){
-        return action.payload;
-    }
+if(action.type === 'DELETE_DETAIL'){
     return null;
 }
 
+
+
+
+
+
+    return dataSource;
+};
+
+
+
 export default combineReducers({
-    userDetails : userDetailsReducer,
-    submittedDetails : submittedDetailsReducer
+    userDetails : userDetailsReducer
 })
