@@ -178,9 +178,10 @@ class EditableTable extends React.Component {
         );
     }
 }
+const detailSelector = state => state.userDetails;
 
 const mapStateToProps = state => {
-    return { userDetails: state.userDetails};
+    return { userDetails: detailSelector(state)};
     
 };
 

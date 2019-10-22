@@ -1,140 +1,237 @@
+// import React, { useState } from 'react';
 import React from 'react';
-import { Form, Input, Button, DatePicker } from 'antd';
+import './App.css';
+import EditableTable from './table/table';
+import Userform from './form/form';
+import { submit } from '../actions';
 
 
-function hasErrors(fieldsError) {
-    return Object.keys(fieldsError).some(field => fieldsError[field]);
 
-}
+const App = () => {
 
-class HorizontalLoginForm extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            dataSource: [
-                {
-                    key: '0',
-                    firstname: 'ayodele ',
-                    lastname: ' kayode',
-                    birthday: '',
-                    age: '32',
-                    hobby: 'ball',
-                },
-                {
-                    key: '1',
-                    firstname: 'ayod',
-                    lastname: ' emma',
-                    birthday: '',
-                    age: '32',
-                    hobby: 'football',
-                },
-            ],
-            count: 2,
-        };
-    }
 
-    updateData = data => {
-        const { count, dataSource } = this.state;
-        const newData = {
-            key: count,
-            firstname: data.firstname,
-            lastname: data.lastname,
-            birthday: data.birthday,
-            age: data.age,
-            hobby: data.hobby,
-        };
-        this.setState({
-            dataSource: [...dataSource, newData],
-            count: count + 1,
-        });
+    return (
+        <div className="App">
+            <Userform submit={submit} />
+            <EditableTable />
 
+        </div>
+    );
+
+};
+
+export default App;
+
+import React from 'react';
+import { connect } from 'react-redux';
+// import { submit } from '../../actions';
+import { Table, Input, Button, Popconfirm, Form } from 'antd';
+// import Userform from './../form/form.js';
+import './table.css';
+
+const EditableContext = React.createContext();
+
+const EditableRow = ({ form, index, ...props }) => (
+    <EditableContext.Provider value={form}>
+        <tr {...props} />
+    </EditableContext.Provider>
+);
+
+const EditableFormRow = Form.create()(EditableRow);
+
+class EditableCell extends React.Component {
+    state = {
+        editing: false,
     };
 
-    componentDidMount() {
-        // To disabled submit button at the beginning.
-        this.props.form.validateFields();
-    }
-
-    handleSubmit = e => {
-        e.preventDefault();
-        this.props.form.validateFields((err, values) => {
-            if (!err) {
-                const dataSet = {
-                    ...values,
-                    'birthday': values['birthday'].format('DD-MM-YYYY'),
-                };
-                console.log('Received values of form: ', dataSet);
-                this.updateData(dataSet);
-                console.log(this.state);
+    toggleEdit = () => {
+        const editing = !this.state.editing;
+        this.setState({ editing }, () => {
+            if (editing) {
+                this.input.focus();
             }
         });
     };
 
+    save = e => {
+        const { record, handleSave } = this.props;
+        this.form.validateFields((error, values) => {
+            if (error && error[e.currentTarget.id]) {
+                return;
+            }
+            this.toggleEdit();
+            handleSave({ ...record, ...values });
+        });
+    };
+
+    renderCell = form => {
+        this.form = form;
+        const { children, dataIndex, record, title } = this.props;
+        const { editing } = this.state;
+        return editing ? (
+            <Form.Item style={{ margin: 0 }}>
+                {form.getFieldDecorator(dataIndex, {
+                    rules: [
+                        {
+                            required: true,
+                            message: `${title} is required.`,
+                        },
+                    ],
+                    initialValue: record[dataIndex],
+                })(<Input ref={node => (this.input = node)} onPressEnter={this.save} onBlur={this.save} />)}
+            </Form.Item>
+        ) : (
+                <div
+                    className="editable-cell-value-wrap"
+                    style={{ paddingRight: 24 }}
+                    onClick={this.toggleEdit}
+                >
+                    {children}
+                </div>
+            );
+    };
+
     render() {
-        const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-
-        // Only show error after a field is touched.
-        const firstnameError = isFieldTouched('firstname') && getFieldError('firstname');
-        const lastnameError = isFieldTouched('lastname') && getFieldError('lastname');
-        const hobbyError = isFieldTouched('hobby') && getFieldError('hobby');
-        const ageError = isFieldTouched('age') && getFieldError('age');
-        const birthError = isFieldTouched('birthday') && getFieldError('birthday');
+        const {
+            editable,
+            dataIndex,
+            title,
+            record,
+            index,
+            handleSave,
+            children,
+            ...restProps
+        } = this.props;
         return (
-            <Form onSubmit={this.handleSubmit} labelCol={{ span: 4 }} wrapperCol={{ span: 6 }}>
-                <Form.Item label="Firstname" validateStatus={firstnameError ? 'error' : ''} help={firstnameError || ''}>
-                    {getFieldDecorator('firstname', {
-                        rules: [{ required: true, message: 'Please input your firstname!' }],
-                    })(
-                        <Input
-                            placeholder="firstname"
-                            type="text"
-                        />,
+            <td {...restProps}>
+                {editable ? (
+                    <EditableContext.Consumer>{this.renderCell}</EditableContext.Consumer>
+                ) : (
+                        children
                     )}
-                </Form.Item>
-                <Form.Item label="Lastname" validateStatus={lastnameError ? 'error' : ''} help={lastnameError || ''}>
-                    {getFieldDecorator('lastname', {
-                        rules: [{ required: true, message: 'Please input your lastname!' }],
-                    })(
-                        <Input
-                            placeholder="lastname"
-                        />,
-                    )}
-                </Form.Item>
-                <Form.Item wrapperCol={{ span: 3, offset: 0 }} label="Birthday" validateStatus={birthError ? 'error' : ''} help={birthError || ''}>
-                    {getFieldDecorator('birthday', {
-                        rules: [{ required: true, message: 'Please select your date of birth!' }],
-                    })(<DatePicker />)}
-                </Form.Item>
-                <Form.Item label="age" validateStatus={ageError ? 'error' : ''} help={ageError || ''}>
-                    {getFieldDecorator('age', {
-                        rules: [{ required: true, message: 'Please input your age!' }],
-                    })(
-                        <Input
-                            placeholder="Age"
-                            type="number"
-                        />,
-                    )}
-                </Form.Item>
-                <Form.Item label="hobby" validateStatus={hobbyError ? 'error' : ''} help={hobbyError || ''}>
-                    {getFieldDecorator('hobby', {
-                        rules: [{ required: true, message: 'Please input your hobby!' }],
-                    })(
-                        <Input
-                            placeholder="hobby"
-                        />,
-                    )}
-                </Form.Item>
-
-                <Form.Item wrapperCol={{ span: 10, offset: 4 }}>
-                    <Button type="primary" htmlType="submit" disabled={hasErrors(getFieldsError())} >
-                        submit
-          </Button>
-                </Form.Item>
-            </Form>
+            </td>
         );
     }
 }
 
-const UserForm = Form.create({ name: 'horizontal_login' })(HorizontalLoginForm);
+const EditableTable = (props) => {
 
-export default UserForm;
+    const columns = [
+        {
+            title: 'FirstName',
+            dataIndex: 'firstname',
+            width: '20%',
+            editable: true,
+        },
+        {
+            title: 'LastName',
+            dataIndex: 'lastname',
+            width: '20%',
+            editable: true,
+        },
+        {
+            title: 'Birthday',
+            dataIndex: 'birthday',
+            editable: true,
+        },
+        {
+            title: 'age',
+            dataIndex: 'age',
+            editable: true,
+        },
+        {
+            title: 'Hobby',
+            dataIndex: 'hobby',
+            editable: true,
+        },
+        {
+            title: 'operation',
+            dataIndex: 'operation',
+            render: (text, record) =>
+                props.userDetails.length >= 1 ? (
+                    <Popconfirm title="Sure to delete?" onConfirm={() => this.props.handleDelete(record.key)}>
+                        <Button type="danger" size="small">Delete</Button>
+                    </Popconfirm>
+                ) : null,
+        },
+    ];
+
+    console.log(props.userDetails);
+    const dataSource = props.userDetails;
+    const components = {
+        body: {
+            row: EditableFormRow,
+            cell: EditableCell,
+        },
+    };
+    // const columnsh = this.columns.map(col => {
+    //     if (!col.editable) {
+    //         return col;
+    //     }
+    //     return {
+    //         ...col,
+    //         onCell: record => ({
+    //             record,
+    //             editable: col.editable,
+    //             dataIndex: col.dataIndex,
+    //             title: col.title,
+    //             handleSave: this.props.handleSave,
+    //         }),
+    //     };
+    // });
+    return (
+
+        <div>
+            <Table
+                components={components}
+                rowClassName={() => 'editable-row'}
+                bordered
+                dataSource={dataSource}
+                columns={columns}
+            />
+        </div>
+    );
+
+}
+
+const mapStateToProps = state => {
+    return { userDetails: selectorDetails(state) };
+
+};
+
+const selectorDetails = (state) => {
+    const userDetails = state => state.userDetails;
+    return userDetails;
+}
+
+export default connect(mapStateToProps)(EditableTable);
+
+import { combineReducers } from 'redux';
+
+
+const userDetailsReducer = (userDetails = null, action) => {
+    if (action.type === 'SUBMIT_FORM') {
+        const { firstname, lastname, birthday, age, hobby } = action.payload;
+        return [{
+            key: 1,
+            firstname: firstname,
+            lastname: lastname,
+            birthday: birthday,
+            age: age,
+            hobby: hobby,
+        }];
+
+    }
+    return userDetails;
+};
+const submittedDetailsReducer = (userDetails = null, action) => {
+    if (action.type === 'SU_FORM') {
+        return action.payload;
+    }
+    return null;
+}
+
+export default combineReducers({
+    userDetails: userDetailsReducer,
+    submittedDetails: submittedDetailsReducer
+})
