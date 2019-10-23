@@ -18,6 +18,7 @@ export const deleteDetail = key => {
 
 export const handleSave = row => {
     console.log(row);
+    
     return{
         type: 'EDIT_DETAIL',
         payload: row

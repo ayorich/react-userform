@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { submit, deleteDetail, handleSave } from '../../actions';
 import { Table, Input, Button, Popconfirm, Form } from 'antd';
 import Userform from './../form/form.js';
+import {getDetailSelectorState} from '../selector.js'
 import './table.css';
 
 const EditableContext = React.createContext();
@@ -178,11 +179,35 @@ class EditableTable extends React.Component {
         );
     }
 }
-const detailSelector = state => state.userDetails;
+
+
+
+
+
+
 
 const mapStateToProps = state => {
-    return { userDetails: detailSelector(state)};
-    
+    return { userDetails: getDetailSelectorState(state) };
+
 };
 
-export default connect(mapStateToProps, { submit, deleteDetail, handleSave})(EditableTable);
+export default connect(mapStateToProps, { submit, deleteDetail, handleSave })(EditableTable);
+
+
+
+
+
+
+
+
+
+
+
+// const detailSelector = state => state.userDetails;
+
+// const mapStateToProps = state => {
+//     return { userDetails: detailSelector(state)};
+    
+// };
+
+// export default connect(mapStateToProps, { submit, deleteDetail, handleSave})(EditableTable);

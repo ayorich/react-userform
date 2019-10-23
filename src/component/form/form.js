@@ -80,7 +80,6 @@ class HorizontalLoginForm extends React.Component {
                         <Input
                             placeholder="Age"
                             type= "number"
-                            maxlength="3"
                         />,
                     )}
                 </Form.Item>
