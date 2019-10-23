@@ -25,8 +25,10 @@ class HorizontalLoginForm extends React.Component {
                     'age': parseInt(values['age']),
                     'birthday': values['birthday'].format('DD-MM-YYYY'),
                 };
-                // to pass form data to table component
+
+                // TO PASS FORM DATA TO ACTION 
                 this.props.submit(dataSet);
+
                 //to clear fields and disable button
                 this.props.form.resetFields();
                 this.props.form.validateFields();

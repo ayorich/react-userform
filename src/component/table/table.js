@@ -94,10 +94,7 @@ class EditableCell extends React.Component {
 class EditableTable extends React.Component {
     
     constructor(props) {
-        console.log(props);
         super(props);
-        console.log(this.props);
-        // console.log(props.newData.dataSource.length);
         this.columns = [
             {
                 title: 'FirstName',
@@ -140,7 +137,6 @@ class EditableTable extends React.Component {
    }
 
    
-
     render() {
         const dataSource  = this.props.userDetails;
         const components = {
@@ -182,10 +178,7 @@ class EditableTable extends React.Component {
 
 
 
-
-
-
-
+//USE FOR GETTING STATE AND PASSING IT TO SELECTOR FUNCTION
 const mapStateToProps = state => {
     return { userDetails: getDetailSelectorState(state) };
 

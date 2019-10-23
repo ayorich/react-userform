@@ -1,7 +1,6 @@
 import { createSelector } from 'reselect'
 
-
-// const detailSelector = state => state.userDetails;
+//SERVE AS A MEMOIZING SELECTOR 
 export const getDetailSelectorState = createSelector(
     state => state.userDetails,
     userDetails => userDetails
