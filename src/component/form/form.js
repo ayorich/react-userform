@@ -22,6 +22,7 @@ class HorizontalLoginForm extends React.Component {
             if (!err) {
                 const dataSet = {
                     ...values,
+                    'age': parseInt(values['age']),
                     'birthday': values['birthday'].format('DD-MM-YYYY'),
                 };
                 // to pass form data to table component
@@ -63,6 +64,7 @@ class HorizontalLoginForm extends React.Component {
                     })(
                         <Input
                             placeholder="lastname"
+                            type="text"
                         />,
                     )}
                 </Form.Item>
@@ -78,6 +80,7 @@ class HorizontalLoginForm extends React.Component {
                         <Input
                             placeholder="Age"
                             type= "number"
+                            maxlength="3"
                         />,
                     )}
                 </Form.Item>
