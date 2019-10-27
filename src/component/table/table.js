@@ -4,7 +4,7 @@ import { Table, Input, Button, Popconfirm, Form } from 'antd';
 import Userform from './../form/form.js';
 import {getDetailSelectorState} from '../selector.js'
 import './table.css';
-import { submit } from '../../actions';
+import { submit, deleteDetail, handleSave } from '../../actions';
 
 const EditableContext = React.createContext();
 
@@ -91,9 +91,6 @@ class EditableCell extends React.Component {
     }
 }
 
-// export const getData = (dataset) => {
-//             const data = dataset;
-//      };
 
 const EditableTable = () => {
     // console.log(props);
@@ -134,7 +131,9 @@ const EditableTable = () => {
                 dataIndex: 'operation',
                 render: (text, record) =>
                     propstate.length >= 1 ? (
-                        <Popconfirm title="Sure to delete?" onConfirm={() => propstate.deleteDetail(record.key)}>
+                        <Popconfirm title="Sure to delete?" onConfirm={
+                            () =>dispatch(deleteDetail(record.key))
+                            }>
                             <Button type="danger" size="small">Delete</Button>
                         </Popconfirm>
                     ) : null, 
@@ -162,7 +161,7 @@ const EditableTable = () => {
                     editable: col.editable,
                     dataIndex: col.dataIndex,
                     title: col.title,
-                    handleSave: propstate.handleSave,
+                    handleSave: (row) => dispatch(handleSave(row)),
                 }),
             };
         });
@@ -188,6 +187,111 @@ const EditableTable = () => {
 
 
 export default EditableTable;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
