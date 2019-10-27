@@ -1,4 +1,5 @@
 // ACTION CREATOR
+//ALL ACTIONS DISPATCH AND CATCHED BY REDUCERS
 export const submit = (details) => {
     //RETURN ACTION
     return {

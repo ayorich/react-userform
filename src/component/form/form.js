@@ -30,8 +30,7 @@ class HorizontalLoginForm extends React.Component {
                 // TO PASS FORM DATA TO ACTION 
                 this.props.click(dataSet);
 
-                // console.log(dataSet);
-                // this.props.click();
+                
 
                 //to clear fields and disable button
                 this.props.form.resetFields();
