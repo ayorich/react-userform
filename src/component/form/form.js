@@ -10,13 +10,13 @@ function hasErrors(fieldsError) {
 }
 
 class HorizontalLoginForm extends React.Component {
-    
     componentDidMount() {
         // To disabled submit button at the beginning.
         this.props.form.validateFields();
+        
     }
 
-    handleSubmit = e => {
+     handleSubmit = e => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
@@ -28,7 +28,10 @@ class HorizontalLoginForm extends React.Component {
                 };
 
                 // TO PASS FORM DATA TO ACTION 
-                this.props.submit(dataSet);
+                this.props.click(dataSet);
+
+                // console.log(dataSet);
+                // this.props.click();
 
                 //to clear fields and disable button
                 this.props.form.resetFields();

@@ -1,10 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { submit, deleteDetail, handleSave } from '../../actions';
+import { useSelector, useDispatch } from 'react-redux';
 import { Table, Input, Button, Popconfirm, Form } from 'antd';
 import Userform from './../form/form.js';
 import {getDetailSelectorState} from '../selector.js'
 import './table.css';
+import { submit } from '../../actions';
 
 const EditableContext = React.createContext();
 
@@ -91,11 +91,17 @@ class EditableCell extends React.Component {
     }
 }
 
-class EditableTable extends React.Component {
-    
-    constructor(props) {
-        super(props);
-        this.columns = [
+// export const getData = (dataset) => {
+//             const data = dataset;
+//      };
+
+const EditableTable = () => {
+    // console.log(props);
+    const propstate = useSelector(getDetailSelectorState);
+    console.log(propstate);
+     const dispatch = useDispatch();
+     
+        const columnline = [
             {
                 title: 'FirstName',
                 dataIndex: 'firstname',
@@ -127,25 +133,25 @@ class EditableTable extends React.Component {
                 title: 'operation',
                 dataIndex: 'operation',
                 render: (text, record) =>
-                    this.props.userDetails.length >= 1 ? (
-                        <Popconfirm title="Sure to delete?" onConfirm={() => this.props.deleteDetail(record.key)}>
+                    propstate.length >= 1 ? (
+                        <Popconfirm title="Sure to delete?" onConfirm={() => propstate.deleteDetail(record.key)}>
                             <Button type="danger" size="small">Delete</Button>
                         </Popconfirm>
                     ) : null, 
             }, 
         ];
-   }
 
-   
-    render() {
-        const dataSource  = this.props.userDetails;
+
+        const dataSource  = propstate;
+
         const components = {
             body: {
                 row: EditableFormRow,
                 cell: EditableCell,
             },
         };
-        const columns = this.columns.map(col => {
+
+    const columns = columnline.map(col => {
             if (!col.editable) {
                 return col;
             }
@@ -156,14 +162,18 @@ class EditableTable extends React.Component {
                     editable: col.editable,
                     dataIndex: col.dataIndex,
                     title: col.title,
-                    handleSave: this.props.handleSave,
+                    handleSave: propstate.handleSave,
                 }),
             };
         });
+
+     const click = (dataset) => dispatch(submit(dataset));
+    
         return (
             
             <div>
-                <Userform submit= {this.props.submit}/>
+                
+                <Userform click={click} />
                 <Table
                     components={components}
                     rowClassName={() => 'editable-row'}
@@ -173,18 +183,11 @@ class EditableTable extends React.Component {
                 />
             </div>
         );
-    }
+    
 }
 
 
-
-//USE FOR GETTING STATE AND PASSING IT TO SELECTOR FUNCTION
-const mapStateToProps = state => {
-    return { userDetails: getDetailSelectorState(state) };
-
-};
-
-export default connect(mapStateToProps, { submit, deleteDetail, handleSave })(EditableTable);
+export default EditableTable;
 
 
 
