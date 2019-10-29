@@ -1,7 +1,7 @@
 import React from 'react';
 import './form.css';
 import { Form, Input, Button, DatePicker } from 'antd';
-import shortid from 'shortid';
+// import shortid from 'shortid';
 
 
 function hasErrors(fieldsError) {
@@ -22,15 +22,12 @@ class HorizontalLoginForm extends React.Component {
             if (!err) {
                 const dataSet = {
                     ...values,
-                    'key':shortid.generate(),
                     'age': parseInt(values['age']),
                     'birthday': values['birthday'].format('DD-MM-YYYY'),
                 };
 
                 // TO PASS FORM DATA TO ACTION 
                 this.props.click(dataSet);
-
-                
 
                 //to clear fields and disable button
                 this.props.form.resetFields();

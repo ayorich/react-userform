@@ -4,7 +4,7 @@ import { Table, Input, Button, Popconfirm, Form } from 'antd';
 import Userform from './../form/form.js';
 import {getDetailSelectorState} from '../selector.js'
 import './table.css';
-import { submit, deleteDetail, handleSave } from '../../actions';
+import { createUser } from '../../actions';
 
 const EditableContext = React.createContext();
 
@@ -131,7 +131,7 @@ const EditableTable = () => {
                 render: (text, record) =>
                     propstate.length >= 1 ? (
                         <Popconfirm title="Sure to delete?" onConfirm={
-                            () =>dispatch(deleteDetail(record.key))
+                            () =>dispatch(null,(record.key))
                             }>
                             <Button type="danger" size="small">Delete</Button>
                         </Popconfirm>
@@ -160,13 +160,13 @@ const EditableTable = () => {
                     editable: col.editable,
                     dataIndex: col.dataIndex,
                     title: col.title,
-                    handleSave: (row) => dispatch(handleSave(row)),
+                    handleSave: (row) => dispatch(null, (row)),
                 }),
             };
-        });
+        }); 
 
-     const click = (dataset) => dispatch(submit(dataset));
-    
+    const click = (dataset) => dispatch(createUser(dataset));
+
         return (
             
             <div>
