@@ -94,7 +94,7 @@ class EditableCell extends React.Component {
 
 const EditableTable = () => {
     const propstate = useSelector(getDetailSelectorState);
-    // console.log(propstate);
+    console.log(propstate);
      const dispatch = useDispatch();
      
         const columnline = [

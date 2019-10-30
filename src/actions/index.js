@@ -2,7 +2,8 @@
 //ALL ACTIONS DISPATCH AND CATCHED BY REDUCERS
 export const actionTypes = {
     SUBMIT_REQUEST: "USER/POST",
-    USER_CREATED: "USER/CREATED"
+    USER_CREATED: "USER/CREATED",
+    FETCH_USER: "USER/FETCH"
 };
 
 export const createUser= user => {
@@ -11,7 +12,13 @@ export const createUser= user => {
         type: actionTypes.SUBMIT_REQUEST,
         user
     }}
-
+export const fetchUsers = (data) => {
+    console.log(data);
+    return {
+        type: actionTypes.FETCH_USER,
+        data
+    }
+}
 export const success= () => {
         return{
         type: actionTypes.success

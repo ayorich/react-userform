@@ -1,13 +1,26 @@
 import { combineReducers } from 'redux';
-let state;
+import { actionTypes } from '../actions';
 
+let state = [];
+
+// export default (state = [] ,{ type, payload }) => {
+//   switch (type) {
+//       case actionTypes.FETCH_USER:
+//       return state.set("items", fromJS(payload));
+//     default:
+//       return state;
+//   }
+// };
  const userDetailsReducer = (data= state , action) => {
     // const { dataSource } = state;
-     if (action.type === 'LIVE') {
-          state = action.payload;
+     console.log(state);
+     console.log(action.type);
+     console.log(action.data);
+     if (action.type === actionTypes.FETCH_USER) {
+          const newData = action.data;
+          state = [...data, newData];
 
          return state
-
      }
 
     // if (action.type === 'SUBMIT_FORM') {
@@ -47,7 +60,7 @@ let state;
     //     return state.dataSource;
     // }
 
-    return null;
+    return state;
 };
 
 
