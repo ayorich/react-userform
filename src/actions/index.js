@@ -3,7 +3,9 @@
 export const actionTypes = {
     SUBMIT_REQUEST: "USER/POST",
     USER_CREATED: "USER/CREATED",
-    FETCH_USER: "USER/FETCH"
+    FETCH_USERS: "USER/FETCH",
+    FETCH_SUCCEEDED :'FETCH/SUCCEEDED',
+    FETCH_FAILED :'FETCH/FAILED',
 };
 
 export const createUser= user => {
@@ -19,10 +21,20 @@ export const fetchUsers = (data) => {
         data
     }
 }
-export const success= () => {
-        return{
-        type: actionTypes.success
-    }}
+//Action sent by Redux-saga
+export const fetchSuccessAction = (receivedUsers) => {
+    return {
+        type: actionTypes.FETCH_SUCCEEDED,
+        receivedUsers
+    }
+}
+
+export const fetchFailedAction = (error) => {
+    return {
+        type: actionTypes.FETCH_FAILED,
+        error
+    }
+}
 
 
 

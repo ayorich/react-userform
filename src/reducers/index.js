@@ -1,27 +1,38 @@
 import { combineReducers } from 'redux';
 import { actionTypes } from '../actions';
 
-let state = [];
 
-// export default (state = [] ,{ type, payload }) => {
-//   switch (type) {
-//       case actionTypes.FETCH_USER:
-//       return state.set("items", fromJS(payload));
-//     default:
-//       return state;
-//   }
-// };
- const userDetailsReducer = (data= state , action) => {
-    // const { dataSource } = state;
-     console.log(state);
-     console.log(action.type);
-     console.log(action.data);
-     if (action.type === actionTypes.FETCH_USER) {
-          const newData = action.data;
-          state = [...data, newData];
 
-         return state
-     }
+const userDetailsReducer = (state = [], action) => {
+    switch (action.type) {
+        case actionTypes.FETCH_SUCCEEDED:
+            console.log(action.receivedUsers);
+            const newData = action.receivedUsers;
+            state = [...state, newData]
+            return state;
+            // return action.receivedUsers;
+        case actionTypes.FETCH_FAILED:
+            return [];
+        default:
+            return state; //state does not change
+    }
+}
+
+export default combineReducers({
+    userDetails: userDetailsReducer
+})
+
+//  const userDetailsReducer = (data= state , action) => {
+//     // const { dataSource } = state;
+//      console.log(state);
+//      console.log(action.type);
+//      console.log(action.data);
+//      if (action.type === actionTypes.FETCH_USER) {
+//           const newData = action.data;
+//           state = [...data, newData];
+
+//          return state
+//      }
 
     // if (action.type === 'SUBMIT_FORM') {
     //     const { key, firstname, lastname, birthday, age, hobby } = action.payload;
@@ -60,10 +71,7 @@ let state = [];
     //     return state.dataSource;
     // }
 
-    return state;
-};
+//     return state;
+// };
 
 
-export default combineReducers({
-    userDetails : userDetailsReducer
-})

@@ -9,7 +9,8 @@ import createSagaMiddleware from 'redux-saga';
 import './index.css';
 import App from './component/App';
 import rootReducer from './reducers';
-import rootSaga from './sagas/rootSaga';
+// import rootSaga from './sagas/rootSaga';
+import rootSaga from './sagas/sagatest';
 // import { composeWithDevTools } from 'redux-devtools-extension';
 import * as serviceWorker from './serviceWorker';
 
