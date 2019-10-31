@@ -95,11 +95,11 @@ class EditableCell extends React.Component {
 const EditableTable = () => {
     const propstate = useSelector(getDetailSelectorState);
     console.log(propstate);
-     const dispatch = useDispatch();
+      const dispatch = useDispatch();
      
         const columnline = [
             {
-                title: 'KEY',
+                title: 'User Id',
                 dataIndex: 'key',
                 width: '20%',
             },
@@ -165,7 +165,7 @@ const EditableTable = () => {
                     editable: col.editable,
                     dataIndex: col.dataIndex,
                     title: col.title,
-                    handleSave: (row) => dispatch(null, (row)),
+                    handleSave: (row) => null,
                 }),
             };
         }); 

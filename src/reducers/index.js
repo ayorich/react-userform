@@ -9,6 +9,7 @@ const userDetailsReducer = (state = [], action) => {
             const newData = action.receivedUsers;
             state = [...state, newData]
             return state;
+            // return [newData];
         default:
             return state; //state does not change
     }

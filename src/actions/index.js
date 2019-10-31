@@ -14,6 +14,7 @@ export const createUser= user => {
 
 //Action sent from Redux-saga
 export const updateUser = (receivedUsers) => {
+    console.log(receivedUsers);
     return {
         type: actionTypes.FETCH_SUCCEEDED,
         receivedUsers
