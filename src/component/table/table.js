@@ -99,6 +99,11 @@ const EditableTable = () => {
      
         const columnline = [
             {
+                title: 'KEY',
+                dataIndex: 'key',
+                width: '20%',
+            },
+            {
                 title: 'FirstName',
                 dataIndex: 'firstname',
                 width: '20%',

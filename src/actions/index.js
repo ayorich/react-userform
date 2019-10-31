@@ -12,9 +12,6 @@ export const createUser= user => {
         user
     }}
 
-
-
-
 //Action sent from Redux-saga
 export const updateUser = (receivedUsers) => {
     return {
