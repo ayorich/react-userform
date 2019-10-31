@@ -10,7 +10,7 @@ const urlPostUsers = 'https://us-central1-userformapi.cloudfunctions.net/entries
 
 //POST API
 function* postingDataApi({user}) {
-    console.log(user);
+    // console.log(user);
     const response = yield fetch(urlPostUsers, {
         method: 'POST',
         headers: {
@@ -25,18 +25,19 @@ function* postingDataApi({user}) {
             hobby: user.hobby
         })
     });
-    console.log(response)
-    console.log(response.status)
-    console.log(`response = ${JSON.stringify(response)}`)
+    // console.log(response)
+    // console.log(response.status)
+    // console.log(`response = ${JSON.stringify(response)}`)
     return yield (response.status === 200);
 }
 
 function* updatedItemSaga() {
     // #1
-    const channel =  eventChannel(emiter => {
+    const channel = new eventChannel(emiter => {
         const listener = database.ref("entries").on("value", snapshot => {
-             emiter(snapshot.val());
-            // emiter({ data: data.val() || {} });
+            snapshot.forEach(childSnapshot => {
+                emiter(childSnapshot.val());
+            })
         });
 
         // #2
@@ -53,25 +54,6 @@ function* updatedItemSaga() {
     }
 }
 
-// function createEventChannel() {
-//     const listener = eventChannel(
-//         emit => {
-//             database.ref('entries')
-//                 .on('value', data => emit(data.val()));
-//             return () => database.ref('entries').off(listener);
-//         }
-//     );
-
-//     return listener;
-// };
-
-// function* updatedItemSaga() {
-//     const updateChannel = createEventChannel();
-//     while (true) {
-//         const item = yield take(updateChannel);
-//         yield put(updateUser(item));
-//     }
-// }
 
 function* watchPostUser() {
     yield takeEvery(actionTypes.SUBMIT_REQUEST, postingDataApi);
@@ -83,3 +65,5 @@ export default function* rootSaga() {
     yield fork(updatedItemSaga);
 
 }
+
+

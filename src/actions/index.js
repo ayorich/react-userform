@@ -6,7 +6,7 @@ export const actionTypes = {
 };
 //Action sent from tablejs and intercepted by redux-saga
 export const createUser= user => {
-    console.log(user)
+    // console.log(user)
     return{
         type: actionTypes.SUBMIT_REQUEST,
         user
@@ -14,7 +14,7 @@ export const createUser= user => {
 
 //Action sent from Redux-saga
 export const updateUser = (receivedUsers) => {
-    console.log(receivedUsers);
+    // console.log(receivedUsers);
     return {
         type: actionTypes.FETCH_SUCCEEDED,
         receivedUsers
